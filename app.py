@@ -337,27 +337,35 @@ if "travel_plan" in st.session_state:
 
     st.header("✈️ Your Travel Recommendations")
 
-    # Flight Details
+    
+       # Flight Details
     flight = travel_plan.get("flight")
 
-st.subheader("✈️ Flight Details")
+    st.subheader("🛫 Flight Details")
 
-if isinstance(flight, dict) and flight:
+    if isinstance(flight, dict) and flight:
 
-    col1, col2, col3 = st.columns(3)
+        col1, col2, col3 = st.columns(3)
 
-    col1.metric("Airline", flight.get("airline", "N/A"))
-    col2.metric("Flight Price", f"₹{flight.get('price', 'N/A')}")
-    col3.metric("Flight ID", flight.get("flight_id", "N/A"))
+        col1.metric("Airline", flight.get("airline", "N/A"))
+        col2.metric("Flight Price", f"₹{flight.get('price', 'N/A')}")
+        col3.metric("Flight ID", flight.get("flight_id", "N/A"))
 
-    st.write("Departure:", flight.get("departure_time", "N/A"))
-    st.write("Arrival:", flight.get("arrival_time", "N/A"))
+        st.write(
+            f"**Departure:** {flight.get('departure_time', 'N/A')}"
+        )
+        st.write(
+            f"**Arrival:** {flight.get('arrival_time', 'N/A')}"
+        )
 
-else:
-    st.warning(
-        "No matching flight was found. "
-        "Please try another source or destination city."
-    )
+    else:
+        st.warning(
+            "No matching flight was found. "
+            "Please try another source or destination city."
+        )
+
+    st.divider()
+
     # Hotel Details
     st.subheader("🏨 Hotel Recommendation")
 
