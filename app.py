@@ -453,22 +453,41 @@ if "travel_plan" in st.session_state:
 
     st.divider()
 
+    
+    
     # Day-wise Itinerary
-    st.subheader("🗓️ Your Day-Wise Itinerary")
+    st.subheader("🗓️ Day-wise Itinerary")
 
     itinerary = travel_plan.get("itinerary", [])
 
-    for day in itinerary:
+    if isinstance(itinerary, list) and itinerary:
 
-        with st.expander(
-            f"Day {day['day']}",
-            expanded=True
-        ):
-            st.write("🌅 **Morning:**", day["morning"])
-            st.write("☀️ **Afternoon:**", day["afternoon"])
-            st.write("🌙 **Evening:**", day["evening"])
+        for index, day in enumerate(itinerary, start=1):
 
-    st.divider()
+            with st.expander(f"Day {index}"):
+
+                if isinstance(day, dict):
+
+                    st.write(
+                        "🌅 **Morning:**",
+                        day.get("morning", "Not provided")
+                    )
+
+                    st.write(
+                        "☀️ **Afternoon:**",
+                        day.get("afternoon", "Not provided")
+                    )
+
+                    st.write(
+                        "🌙 **Evening:**",
+                        day.get("evening", "Not provided")
+                    )
+
+                else:
+                    st.write(day)
+
+    else:
+        st.info("No itinerary details are available.")
 
     # Download Travel Plan
     st.subheader("📥 Download Your Travel Plan")
