@@ -366,27 +366,30 @@ if "travel_plan" in st.session_state:
 
     st.divider()
 
-    # Hotel Details
-    st.subheader("🏨 Hotel Recommendation")
+    
+        # Hotel Details
+    st.subheader("🏨 Hotel Details")
 
-    hotel = travel_plan["hotel"]
+    hotel = travel_plan.get("hotel")
 
-    col1, col2, col3 = st.columns(3)
+    if isinstance(hotel, dict) and hotel:
 
-    col1.metric("Hotel", hotel["name"])
-    col2.metric("Star Rating", f"{hotel['stars']} ⭐")
-    col3.metric(
-        "Price per Night",
-        f"₹{hotel['price_per_night']}"
-    )
+        col1, col2, col3 = st.columns(3)
 
-    st.write(
-        "**Amenities:**",
-        ", ".join(hotel["amenities"])
-    )
+        col1.metric("Hotel", hotel.get("name", "N/A"))
+        col2.metric("Star Rating", hotel.get("stars", "N/A"))
+        col3.metric(
+            "Price per Night",
+            f"₹{hotel.get('price_per_night', 'N/A')}"
+        )
+
+        amenities = hotel.get("amenities", [])
+        st.write("**Amenities:**", ", ".join(amenities))
+
+    else:
+        st.warning("No matching hotel was found.")
 
     st.divider()
-
     # Tourist Places
     st.subheader("📍 Recommended Tourist Places")
 
